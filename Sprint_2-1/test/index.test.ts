@@ -51,4 +51,19 @@ describe("Check debounce function", () => {
     // expect function to be called with 2 arguments
     expect(mockFunction).toHaveBeenCalledWith("arg1", "arg2");
   });
+  it("should maintain the correct context when called", () => {
+    const context = {
+      value: 42,
+      mockupFunction: jest.fn(),
+    };
+    const debouncedFunction = debounce(context.mockupFunction, 1000).bind(
+      context
+    );
+
+    debouncedFunction();
+
+    jest.advanceTimersByTime(1000);
+
+    expect(context.mockupFunction).toBeCalledTimes(1);
+  });
 });
