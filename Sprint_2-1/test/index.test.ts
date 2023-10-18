@@ -66,4 +66,22 @@ describe("Check debounce function", () => {
 
     expect(context.mockupFunction).toBeCalledTimes(1);
   });
+
+  it("Should execute the debounce function after custom delay", () => {
+    const mockFunction = jest.fn();
+    const debouncedFunction = debounce(mockFunction, 2000);
+
+    debouncedFunction();
+
+    // advance. Short of the customer delay
+    jest.advanceTimersByTime(1999);
+
+    expect(mockFunction).not.toHaveBeenCalled();
+
+    // advance 1ms to reach customer delay
+    jest.advanceTimersByTime(1);
+
+    // function should have been called now
+    expect(mockFunction).toHaveBeenCalledTimes(1);
+  });
 });
