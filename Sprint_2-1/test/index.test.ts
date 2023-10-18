@@ -1,7 +1,5 @@
 import { debounce } from "../src/index";
 
-// const debounce = require("../src/index");
-
 // Mockup Jest
 jest.useFakeTimers();
 
@@ -31,6 +29,9 @@ describe("Check debounce function", () => {
     debouncedFunction();
     debouncedFunction();
 
+    // Check if function has not been called yet
+    expect(mockFunction).not.toHaveBeenCalled();
+
     jest.advanceTimersByTime(1000);
 
     // check if function has called once
@@ -44,9 +45,9 @@ describe("Check debounce function", () => {
 
     // call debounce function with arguments
     debouncedFunction("arg1", "arg2");
+    expect(mockFunction).not.toHaveBeenCalled();
 
     jest.advanceTimersByTime(1000);
-
     // expect function to be called with 2 arguments
     expect(mockFunction).toHaveBeenCalledWith("arg1", "arg2");
   });
