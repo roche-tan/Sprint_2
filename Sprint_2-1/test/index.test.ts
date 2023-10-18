@@ -7,27 +7,23 @@ jest.useFakeTimers();
 
 describe("Check debounce function", () => {
   it("Should run function after the delay", () => {
-    // Configura una función de prueba
     const mockFunction = jest.fn();
 
-    // Crea una función debounce con un retraso de 1000 ms
+    // Debounce with a 1000ms delay
     const debouncedFunction = debounce(mockFunction, 1000);
 
-    // Llama a la función debounce
     debouncedFunction();
 
-    // Avanza el tiempo en 1000 ms
+    // Advance 1000ms
     jest.advanceTimersByTime(1000);
 
-    // Verifica que la función se haya llamado solo una vez
+    // Check if function has been called
     expect(mockFunction).toHaveBeenCalledTimes(1);
   });
 
   it("Should run the function only once for repeated calls within the delay period.", () => {
-    // Configura una función de prueba
     const mockFunction = jest.fn();
 
-    // Crea una función debounce con un retraso de 1000 ms
     const debouncedFunction = debounce(mockFunction, 1000);
 
     // call function several times
@@ -42,10 +38,8 @@ describe("Check debounce function", () => {
   });
 
   it("Should passthe arguments to the debounce function correctly", () => {
-    // Configura una función de prueba
     const mockFunction = jest.fn();
 
-    // Crea una función debounce con un retraso de 1000 ms
     const debouncedFunction = debounce(mockFunction, 1000);
 
     // call debounce function with arguments
