@@ -7,7 +7,7 @@
     "dev": "tsc --watch",
     "start": "tsc",
     "test": "jest --coverage",
-    "run:cli": "node ./dist/src/index.js"
+    "cli": "node ./dist/src/index.js"
   },
   "type": "module",
   "keywords": [],

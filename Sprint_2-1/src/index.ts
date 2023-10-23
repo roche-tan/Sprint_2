@@ -14,16 +14,23 @@ import { debounce } from "./debounce_fn.js";
 // console.log("Tu nombre es: " + answer.name);
 
 // -------------------- CLI DEBOUNCE
-const answer = await inquirer.prompt([
+const answers = await inquirer.prompt([
   {
     type: "input",
     name: "name",
     message: "Cómo te llamas?",
   },
+  {
+    type: "input",
+    name: "color",
+    message: "Cuál es tu color favorito?",
+  },
 ]);
 
-const debounceFunction = debounce((input: string) => {
-  console.log(`Debounced Input: ${input}`);
+// Will show console log after 2000ms
+const debounceFunction = debounce((name: string, color: string) => {
+  console.log(`Nombre: ${name}`);
+  console.log(`Color: ${color}`);
 }, 2000);
 
-debounceFunction(answer.name);
+debounceFunction(answers.name, answers.color);
