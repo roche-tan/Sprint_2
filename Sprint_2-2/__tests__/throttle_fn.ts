@@ -38,7 +38,6 @@ describe("check throttle function", () => {
   it("calls the passed function immediately on the first invocation", () => {
     const mockFunction = jest.fn();
     const throttleFunction = throttle(mockFunction, 100);
-    mockFunction.mockClear(); //"Restore the state of the mock function.
     throttleFunction();
     expect(mockFunction).toHaveBeenCalled();
   });
@@ -46,7 +45,6 @@ describe("check throttle function", () => {
   it("waits for the specified time before allowing another call", async () => {
     const mockFunction = jest.fn();
     const throttleFunction = throttle(mockFunction, 100);
-
     throttleFunction();
     expect(mockFunction).toBeCalled();
 
@@ -56,26 +54,41 @@ describe("check throttle function", () => {
     expect(mockFunction).toBeCalledTimes(1);
   });
 
-  // it("handles arguments and context correctly", async () => {
-  //   const context = { key: "value" };
-  //   let returnedContext;
+  it("calls the throttled function only once during the wait period", async () => {
+    const mockFunction = jest.fn();
+    const throttleFunction = throttle(mockFunction, 100);
 
-  //   const mockFunction = jest.fn(function (this: any) {
-  //     returnedContext = this;
-  //   });
+    throttleFunction();
+    throttleFunction();
+    throttleFunction();
+    throttleFunction();
+    throttleFunction();
 
-  //   const throttleFunction = throttle(mockFunction, 100);
+    await new Promise((resolve) => setTimeout(resolve, 200));
 
-  //   throttleFunction.call(context, 1, 2, 3);
+    // Después de esperar, la función mockFunction pasada a throttle debe llamarse solo una vez
+    expect(mockFunction).toHaveBeenCalledTimes(1);
+  });
 
-  //   await new Promise((resolve) => setTimeout(resolve, 50));
-  //   throttleFunction.call(context, 4, 5);
+  it("cancels waiting and allows immediate call with cancellation argument", async () => {
+    const mockFunction = jest.fn();
+    const throttleFunction = throttle(mockFunction, 100);
 
-  //   await new Promise((resolve) => setTimeout(resolve, 100));
+    // Call throttleFunction without expecting the function to be executed immediately
+    throttleFunction();
+    expect(mockFunction).not.toHaveBeenCalledTimes(0);
 
-  //   expect(mockFunction).toHaveBeenCalledTimes(1);
-  //   expect(mockFunction).toHaveBeenCalledWith(1, 2, 3);
+    // Call throttleFunction with a cancellation argument
+    throttleFunction("cancel");
 
-  //   expect(returnedContext).toEqual(context);
-  // });
+    // Now, let's wait for a bit longer than the throttle duration (100ms)
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    // The mockFunction should not be called because we canceled the previous call
+    expect(mockFunction).not.toHaveBeenCalled();
+
+    // Call throttleFunction again, and it should execute immediately
+    throttleFunction();
+    expect(mockFunction).toHaveBeenCalledTimes(1);
+  });
 });
