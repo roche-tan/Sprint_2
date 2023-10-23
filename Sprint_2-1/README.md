@@ -25,20 +25,20 @@ Make sure you have Node.js and npm installed on your system before proceeding.
 3. Install all project dependencies:
 
 
-`npm install`
+    `npm install`
 
 
 ### Usage
 
 - To run Jest tests:
 
-`npm test`
+    `npm test`
 
 
 - To manually transpile from Typescript to Javascript:
 
-`npm start`
+    `npm start`
     
 - To run CLI with inquirer:
 
-`npm run cli`
+    `npm run cli`
