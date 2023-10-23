@@ -1,4 +1,4 @@
-# Sprint_2.2: Debounce function
+# Sprint_2.2: Throttle function
 
 ### Description
 
@@ -12,33 +12,26 @@ Make sure you have Node.js and npm installed on your system before proceeding.
 
 1. Clone this repository to your local machine:
 
-
    `git clone https://github.com/roche-tan/Sprint_2.git `
-
 
 2. Move to folder
 
-
    `cd Sprint_2-2 `
-
 
 3. Install all project dependencies:
 
-
-    `npm install`
-
+   `npm install`
 
 ### Usage
 
 - To run Jest tests:
 
-    `npm test`
-
+  `npm test`
 
 - To manually transpile from Typescript to Javascript:
 
-    `npm start`
-    
+  `npm start`
+
 - To run CLI with inquirer:
 
-    `npm run cli`
+  `npm run cli`
