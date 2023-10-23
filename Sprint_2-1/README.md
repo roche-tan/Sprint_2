@@ -2,7 +2,7 @@
 
 ### Description
 
-Recreation of debounce function using Test-Driven Development (TDD) with Jest, Typescript and CLI with inquirer.
+Recreation of **debounce function** using Test-Driven Development (TDD) with Jest, Typescript and CLI with inquirer.
 
 ### Prerequisites
 
