@@ -1,7 +1,6 @@
 export const memoize = (fn: Function) => {
   const cache = new Map<string, any>(); // type string as we give arguments as clue
-
-  return (...args: any[]) => {
+  const memoizedFunction = (...args: any[]) => {
     // Converts arguments into it in JSON string for each argument. Importat if working with complex arguments
     const key = JSON.stringify(args);
     if (cache.has(key)) {
@@ -12,6 +11,11 @@ export const memoize = (fn: Function) => {
       return result;
     }
   };
+
+  // Add cache property
+  memoizedFunction.cache = cache;
+
+  return memoizedFunction;
 };
 
 // const memoizedAdd = memoize((a: number, b: number) => {
