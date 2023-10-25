@@ -1,31 +1,30 @@
-export const throttle = (fn: Function, wait: number) => {
-  let canCall: boolean = true;
-  let args: any[] = [];
-  let timeout: NodeJS.Timeout | null = null;
+export const throttle = (fn: Function, delay: number) => {
+  if (typeof fn !== "function") {
+    throw new Error("Provided function is not a valid function");
+  }
 
-  return function (...newArgs: any[]) {
-    if (canCall) {
-      args = newArgs;
-      fn.apply(this, args);
-      canCall = false;
-      timeout = setTimeout(() => {
-        canCall = true;
-        if (args.length > 0) {
-          fn.apply(this, args);
-          args = [];
-        }
-      }, wait);
+  if (typeof delay !== "number" || isNaN(delay)) {
+    throw new Error("Delay must be a number");
+  }
+
+  let shouldWait = false;
+  let waitingArgs: any[] | null;
+  const timeoutFunction = () => {
+    if (waitingArgs == null) {
+      shouldWait = false;
     } else {
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-      timeout = setTimeout(() => {
-        canCall = true;
-        if (args.length > 0) {
-          fn.apply(this, args);
-          args = [];
-        }
-      }, wait);
+      fn(...waitingArgs);
+      waitingArgs = null;
+      setTimeout(timeoutFunction, delay);
     }
+  };
+  return (...args: any[]) => {
+    if (shouldWait) {
+      waitingArgs = args;
+      return;
+    }
+    fn(...args);
+    shouldWait = true;
+    setTimeout(timeoutFunction, delay);
   };
 };

@@ -1,31 +1,29 @@
-export const throttle = (fn, wait) => {
-    let canCall = true;
-    let args = [];
-    let timeout = null;
-    return function (...newArgs) {
-        if (canCall) {
-            args = newArgs;
-            fn.apply(this, args);
-            canCall = false;
-            timeout = setTimeout(() => {
-                canCall = true;
-                if (args.length > 0) {
-                    fn.apply(this, args);
-                    args = [];
-                }
-            }, wait);
+export const throttle = (fn, delay) => {
+    if (typeof fn !== "function") {
+        throw new Error("Provided function is not a valid function");
+    }
+    if (typeof delay !== "number" || isNaN(delay)) {
+        throw new Error("Delay must be a number");
+    }
+    let shouldWait = false;
+    let waitingArgs;
+    const timeoutFunction = () => {
+        if (waitingArgs == null) {
+            shouldWait = false;
         }
         else {
-            if (timeout) {
-                clearTimeout(timeout);
-            }
-            timeout = setTimeout(() => {
-                canCall = true;
-                if (args.length > 0) {
-                    fn.apply(this, args);
-                    args = [];
-                }
-            }, wait);
+            fn(...waitingArgs);
+            waitingArgs = null;
+            setTimeout(timeoutFunction, delay);
         }
+    };
+    return (...args) => {
+        if (shouldWait) {
+            waitingArgs = args;
+            return;
+        }
+        fn(...args);
+        shouldWait = true;
+        setTimeout(timeoutFunction, delay);
     };
 };

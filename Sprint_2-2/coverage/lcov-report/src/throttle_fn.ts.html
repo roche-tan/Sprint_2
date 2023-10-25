@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.81% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>18/22</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">60% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/5</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.95% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/21</span>
+                <span class='fraction'>19/19</span>
             </div>
         
             
@@ -93,67 +93,64 @@
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export const throttle = (fn: Function, wait: number) =&gt; {
-  let canCall: boolean = true;
-  let args: any[] = [];
-  let timeout: NodeJS.Timeout | null = null;
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export const throttle = (fn: Function, delay: number) =&gt; {
+  if (typeof fn !== "function") {
+    throw new Error("Provided function is not a valid function");
+  }
 &nbsp;
-  return function (...newArgs: any[]) {
-    if (canCall) {
-      args = newArgs;
-      fn.apply(this, args);
-      canCall = false;
-      timeout = setTimeout(() =&gt; {
-        canCall = true;
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (args.length &gt; 0) {
-<span class="cstat-no" title="statement not covered" >          fn.apply(this, args);</span>
-<span class="cstat-no" title="statement not covered" >          args = [];</span>
-        }
-      }, wait);
+  if (typeof delay !== "number" || isNaN(delay)) {
+    throw new Error("Delay must be a number");
+  }
+&nbsp;
+  let shouldWait = false;
+  let waitingArgs: any[] | null;
+  const timeoutFunction = () =&gt; {
+    if (waitingArgs == null) {
+      shouldWait = false;
     } else {
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-      timeout = setTimeout(() =&gt; {
-        canCall = true;
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (args.length &gt; 0) {
-<span class="cstat-no" title="statement not covered" >          fn.apply(this, args);</span>
-<span class="cstat-no" title="statement not covered" >          args = [];</span>
-        }
-      }, wait);
+      fn(...waitingArgs);
+      waitingArgs = null;
+      setTimeout(timeoutFunction, delay);
     }
+  };
+  return (...args: any[]) =&gt; {
+    if (shouldWait) {
+      waitingArgs = args;
+      return;
+    }
+    fn(...args);
+    shouldWait = true;
+    setTimeout(timeoutFunction, delay);
   };
 };
 &nbsp;</pre></td></tr></table></pre>
@@ -163,7 +160,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-10-25T08:12:47.858Z
+                at 2023-10-25T16:40:22.358Z
             </div>
         <script src="../prettify.js"></script>
         <script>
