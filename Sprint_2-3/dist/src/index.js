@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import { memoize } from "./memoize-fn";
+import { memoizedFactorial } from "./myFunction.js";
 // -------------------- CLI TEST
 // const answer = await inquirer.prompt([
 //   {
@@ -10,30 +10,27 @@ import { memoize } from "./memoize-fn";
 // ]);
 // console.log("Tu nombre es: " + answer.name);
 // -------------------- CLI MEMOIZE
-const factorial = (n) => (n <= 1 ? 1 : n * factorial(n - 1));
-const memoizedFactorial = memoize(factorial);
-const promtQuestions = await inquirer.prompt([
-    {
-        type: "input",
-        name: "number",
-        message: "Enter the number to check the factorial or 'cancel' to cancel CLI: ",
-    },
-]);
 const runCLI = async () => {
     while (true) {
-        const answers = promtQuestions;
-        const input = answers.number;
-        if (input.toLocaleLowerCase() === "exit") {
+        const { number } = await inquirer.prompt([
+            {
+                type: "input",
+                name: "number",
+                message: "Enter a number to calculate its factorial (or 'exit' to exit): ",
+            },
+        ]);
+        const input = number.toLowerCase();
+        if (input === "exit") {
             console.log("Exiting program");
             break;
         }
-        const number = parseInt(input, 10);
-        if (!isNaN(number)) {
-            const result = memoizedFactorial(number);
-            console.log(`Factorial of ${number} is ${result}`);
+        const num = parseInt(input, 10);
+        if (!isNaN(num)) {
+            const result = memoizedFactorial(num);
+            console.log(`Factorial of ${num} is ${result}`);
         }
         else {
-            console.log(`Please aenter a valid number`);
+            console.log("Please enter a valid number.");
         }
     }
 };
