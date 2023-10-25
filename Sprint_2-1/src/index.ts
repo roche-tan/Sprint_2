@@ -28,9 +28,9 @@ const answers = await inquirer.prompt([
 ]);
 
 // Will show console log after 2000ms
-const debounceFunction = debounce((name: string, color: string) => {
+const runCLI = debounce((name: string, color: string) => {
   console.log(`Nombre: ${name}`);
   console.log(`Color: ${color}`);
 }, 2000);
 
-debounceFunction(answers.name, answers.color);
+runCLI(answers.name, answers.color);
