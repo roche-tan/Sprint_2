@@ -29,14 +29,18 @@ const runCLI = async () => {
 
     if (input === "exit") {
       console.log("Exiting program");
+      // exits loop
       break;
     }
 
+    // converts to integer and to decimal numerical base. No binary, octal nor hexadecimal
     const num = parseInt(input, 10);
 
-    if (!isNaN(num)) {
-      // Verify if num is in cache
+    if (num) {
+      // key so we are able to search factorial in our cache
       const key = JSON.stringify([num]);
+      
+      // Verify if num is in cache
       if (memoizedFactorial.cache.has(key)) {
         const result = memoizedFactorial(num);
         console.log(`Found in cache: Factorial of ${num} is ${result}`);

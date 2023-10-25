@@ -22,10 +22,12 @@ const runCLI = async () => {
         const input = number.toLowerCase();
         if (input === "exit") {
             console.log("Exiting program");
+            // exits loop
             break;
         }
+        // converts to integer and to decimal numerical base. No binary, octal nor hexadecimal
         const num = parseInt(input, 10);
-        if (!isNaN(num)) {
+        if (num) {
             // Verify if num is in cache
             const key = JSON.stringify([num]);
             if (memoizedFactorial.cache.has(key)) {
