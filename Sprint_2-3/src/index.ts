@@ -1,46 +1,29 @@
-import inquirer from "inquirer";
 import { memoizedFactorial } from "./myFunction";
 
-// -------------------- CLI TEST
-// const answer = await inquirer.prompt([
-//   {
-//     type: "input",
-//     name: "name",
-//     message: "Cómo te llamas?",
-//   },
-// ]);
+// HTML
 
-// console.log("Tu nombre es: " + answer.name);
-
-// -------------------- CLI MEMOIZE
-
-const runCLI = async () => {
-  while (true) {
-    const { number } = await inquirer.prompt([
-      {
-        type: "input",
-        name: "number",
-        message:
-          "Enter a number to calculate its factorial (or 'exit' to exit): ",
-      },
-    ]);
-
-    const input = number.toLowerCase();
-
-    if (input === "exit") {
-      console.log("Exiting program");
-      break;
-    }
-
-    const num = parseInt(input, 10);
+const resultElement = document.getElementById("result") as HTMLElement;
+const numberInput = document.getElementById("numberInput") as HTMLInputElement;
+const calculateButton = document.getElementById("btn") as HTMLButtonElement;
+if (resultElement && numberInput && calculateButton) {
+  calculateButton.addEventListener("click", () => {
+    const num = parseInt(numberInput.value, 10);
 
     if (!isNaN(num)) {
-      const result = memoizedFactorial(num);
-      console.log(`Factorial of ${num} is ${result}`);
+      // Verify if num is in cache
+      const key = JSON.stringify([num]);
+      if (memoizedFactorial.cache.has(key)) {
+        const result = memoizedFactorial(num);
+        resultElement.textContent = `Encontrado en el cache: Factorial de ${num} es ${result}`;
+      } else {
+        // If not in cache
+        const result = memoizedFactorial(num);
+        resultElement.textContent = `No encontrado en el cache: Factorial de ${num} es ${result}`;
+      }
+      // Clear input after calculation
+      numberInput.value = "";
     } else {
-      console.log("Please enter a valid number.");
+      resultElement.textContent = "Entra un número valido";
     }
-  }
-};
-
-runCLI();
+  });
+}
