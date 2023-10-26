@@ -1,4 +1,4 @@
-import { memoizedFactorial } from "./myFunction";
+import { memoizedFactorial } from "./myFunction.js";
 
 // HTML
 

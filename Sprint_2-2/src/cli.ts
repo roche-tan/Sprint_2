@@ -13,45 +13,34 @@ const askForInput = async () => {
 
 let currentInput = "";
 
+// displays user text
 const displayInput = () => {
   console.log("Text recived: ", currentInput);
 };
 
-const throttleDisplay = throttle(displayInput, 3000);
+const throttleDisplay = throttle(displayInput, 1500);
 
 const getInputAndDisplay = async () => {
   const answer = await askForInput();
 
+  // if user sends empty string
   if (answer.input === "") {
     return;
   }
-
+// if input has been recived, we update currentInput
   currentInput = answer.input;
-  throttleDisplay();
 
-  // Llamar de nuevo a la función de manera recursiva después de mostrar el mensaje
+  // we call throttleDisplay to display the input, respecting the time limit. 
+  await throttleDisplay();
+
+  // we call the function getInputAndDisplay so user can write another text 
   await getInputAndDisplay();
 };
 
+// starts the CLI
 const runCLI = async () => {
   console.log("Welcome to the CLI. Press Enter with an empty message to exit.");
   await getInputAndDisplay();
 };
 
 runCLI();
-
-// const runCLI = async () => {
-//   console.log("Welcome to the CLI. Press Enter with an empty message to exit.");
-//   while (true) {
-//     const answer = await askForInput();
-
-//     if (answer.input === "") {
-//       break;
-//     }
-
-//     currentInput = answer.input;
-
-//     throttleDisplay();
-//   }
-// };
-// runCLI();

@@ -1,4 +1,4 @@
-import { memoize } from "./memoize-fn";
+import { memoize } from "./memoize-fn.js";
 
 // FACTORIAL
 

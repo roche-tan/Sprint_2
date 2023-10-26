@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import { memoizedFactorial } from "./myFunction";
+import { memoizedFactorial } from "./myFunction.js";
 
 // -------------------- CLI TEST
 // const answer = await inquirer.prompt([
