@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
 import { throttle } from "./throttle_fn.js";
-const askForInput = () => {
+const askForInput = async () => {
     return inquirer.prompt([
         {
             type: "input",
@@ -13,7 +13,7 @@ let currentInput = "";
 const displayInput = () => {
     console.log("Text recived: ", currentInput);
 };
-const throttleDisplay = throttle(displayInput, 8000);
+const throttleDisplay = throttle(displayInput, 3000);
 const getInputAndDisplay = async () => {
     const answer = await askForInput();
     if (answer.input === "") {
