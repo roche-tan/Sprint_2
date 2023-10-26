@@ -6,11 +6,11 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; 
-  
+  align-items: center;
+
   font-family: "Poppins", Arial, Helvetica, sans-serif;
 }
-
+/* 
 #main-container {
   text-align: center;
   background-color: #94d2bd;
@@ -18,11 +18,10 @@ body {
   padding: 25px;
   border-radius: 10px;
   font-family: "Poppins", Arial, Helvetica, sans-serif;
-}
+} */
 
 input[type="number"] {
   padding: 5px 10px;
- 
 }
 button {
   font-size: 16px;

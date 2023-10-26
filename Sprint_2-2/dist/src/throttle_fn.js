@@ -1,4 +1,5 @@
 export const throttle = (fn, delay) => {
+    let throttleCallCount = 0;
     if (typeof fn !== "function") {
         throw new Error("Provided function is not a valid function");
     }
@@ -25,5 +26,6 @@ export const throttle = (fn, delay) => {
         fn(...args);
         shouldWait = true;
         setTimeout(timeoutFunction, delay);
+        throttleCallCount++;
     };
 };
